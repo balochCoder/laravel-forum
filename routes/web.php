@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DiscussionController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*

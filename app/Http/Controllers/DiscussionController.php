@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreDiscussionRequest;
+use App\Models\Discussion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class DiscussionController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth')->only(['create','store']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,8 @@ class DiscussionController extends Controller
      */
     public function index()
     {
-        //
+        $discussions = Discussion::latest()->paginate(5);
+        return view('discussions.index',compact('discussions'));
     }
 
     /**
@@ -32,9 +40,19 @@ class DiscussionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDiscussionRequest $request)
     {
-        //
+        // dd($request->all());
+        Auth::user()->discussions()->create([
+            'title' => $request->title,
+            'content'=>$request->content,
+            'slug'=>Str::slug($request->title,'-'),
+            'channel_id'=>$request->channel_id,
+        ]);
+
+        
+        return redirect()->route('discussions.index')->with('message','Discussion created successfully');
+
     }
 
     /**

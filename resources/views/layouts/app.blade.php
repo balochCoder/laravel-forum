@@ -19,6 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('css')
 </head>
 
 <body>
@@ -64,7 +65,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
+                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -84,13 +85,19 @@
             <main class="container py-4">
                 <div class="row">
                     <div class="col-md-4">
-                        <ul class="list-group">
-                            @foreach ($channels as $channel)
-                                <li class="list-group-item">
-                                    {{ $channel->name }}
-                                </li>
-                            @endforeach
-                        </ul>
+                        <a href="{{route('discussions.create')}}" class="btn btn-info my-2 text-white" style="width: 100%; font-weight: bold">Add Discussion</a>
+                        <div class="card">
+                            <div class="card-header">Channels</div>
+                            <div class="card-body">
+                                <ul class="list-group">
+                                    @foreach ($channels as $channel)
+                                        <li class="list-group-item">
+                                            {{ $channel->name }}
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-8">
                         @yield('content')
@@ -104,6 +111,7 @@
             </main>
         @endauth
     </div>
+    @yield('js')
 </body>
 
 </html>
