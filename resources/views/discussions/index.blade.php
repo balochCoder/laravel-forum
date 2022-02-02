@@ -1,13 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-   
+
 
     @foreach ($discussions as $discussion)
         <div class="card mb-2">
-            <div class="card-header"><img src="" alt=""></div>
+            @include('partials._discussion-header')
             <div class="card-body">
-                {!! $discussion->content !!}
+                <div class="text-center">
+                    <strong>{{ $discussion->title }}</strong>
+                </div>
             </div>
         </div>
     @endforeach

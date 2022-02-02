@@ -19,4 +19,9 @@ class Discussion extends Model
     {
         return $this->belongsTo(Channel::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
