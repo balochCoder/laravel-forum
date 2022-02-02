@@ -64,8 +64,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                 document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                                                     document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -80,12 +81,18 @@
                 </div>
             </div>
         </nav>
-
-        @auth
+        @if (!in_array(request()->path(), ['login', 'register', 'password/email', 'password/reset']))
             <main class="container py-4">
                 <div class="row">
                     <div class="col-md-4">
-                        <a href="{{route('discussions.create')}}" class="btn btn-info my-2 text-white" style="width: 100%; font-weight: bold">Add Discussion</a>
+                        @auth
+                            <a href="{{ route('discussions.create') }}" class="btn btn-info my-2 text-white"
+                                style="width: 100%; font-weight: bold">Add Discussion</a>
+                        @else
+                            <a href="{{ route('login') }}" class="btn btn-info my-2 text-white"
+                                style="width: 100%; font-weight: bold">Sign in to Add discussion</a>
+                        @endauth
+
                         <div class="card">
                             <div class="card-header">Channels</div>
                             <div class="card-body">
@@ -109,7 +116,7 @@
             <main class="py-4">
                 @yield('content')
             </main>
-        @endauth
+        @endif
     </div>
     @yield('js')
 </body>
