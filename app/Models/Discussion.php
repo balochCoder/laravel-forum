@@ -19,7 +19,10 @@ class Discussion extends Model
     {
         return $this->belongsTo(Channel::class);
     }
-
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
     public function getRouteKeyName()
     {
         return 'slug';
