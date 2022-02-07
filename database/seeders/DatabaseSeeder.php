@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Channel;
 use App\Models\Discussion;
+use App\Models\Reply;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
 
         Channel::factory(10)->create();
         Discussion::factory(20)->create();
+        Reply::factory(100)->create();
         // User::factory()->count(5)->create()->each(function ($user) {
 
         //     Discussion::factory()->count(5)->create(['user_id' => $user->id]);

@@ -17,6 +17,7 @@ class CreateDiscussionsTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
+            $table->integer('reply_id')->nullable();
             $table->string('slug')->unique();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('channel_id')->constrained()->onDelete('cascade');

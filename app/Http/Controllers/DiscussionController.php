@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreDiscussionRequest;
 use App\Models\Discussion;
+use App\Models\Reply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class DiscussionController extends Controller
 {
-    public function __construct() {
-        $this->middleware('auth')->only(['create','store']);
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['create', 'store']);
     }
     /**
      * Display a listing of the resource.
@@ -21,7 +23,7 @@ class DiscussionController extends Controller
     public function index()
     {
         $discussions = Discussion::latest()->paginate(5);
-        return view('discussions.index',compact('discussions'));
+        return view('discussions.index', compact('discussions'));
     }
 
     /**
@@ -45,14 +47,13 @@ class DiscussionController extends Controller
         // dd($request->all());
         Auth::user()->discussions()->create([
             'title' => $request->title,
-            'content'=>$request->content,
-            'slug'=>Str::slug($request->title,'-'),
-            'channel_id'=>$request->channel_id,
+            'content' => $request->content,
+            'slug' => Str::slug($request->title, '-'),
+            'channel_id' => $request->channel_id,
         ]);
 
-        
-        return redirect()->route('discussions.index')->with('message','Discussion created successfully');
 
+        return redirect()->route('discussions.index')->with('message', 'Discussion created successfully');
     }
 
     /**
@@ -63,7 +64,7 @@ class DiscussionController extends Controller
      */
     public function show(Discussion $discussion)
     {
-        return view('discussions.show',compact('discussion'));
+        return view('discussions.show', compact('discussion'));
     }
 
     /**
@@ -98,5 +99,16 @@ class DiscussionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function bestReply(Discussion $discussion, Reply $reply)
+    {
+
+        $discussion->markAsBestReply($reply);
+
+
+       
+        return redirect()->back()->with('success', 'Mark as best reply');
     }
 }

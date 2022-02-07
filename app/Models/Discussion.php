@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Discussion extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','slug','content','user_id','channel_id'];
+    protected $fillable = ['title', 'slug', 'content', 'user_id', 'channel_id','reply_id'];
 
     public function user()
     {
@@ -26,5 +26,17 @@ class Discussion extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function markAsBestReply(Reply $reply)
+    {
+        $this->update([
+            'reply_id' => $reply->id
+        ]);
+    }
+
+    public function bestReply()
+    {
+        return $this->belongsTo(Reply::class,'reply_id');
     }
 }
