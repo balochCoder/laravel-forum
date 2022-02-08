@@ -38,7 +38,14 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        @auth
+                            <a href="" class="nav-link">
+                                <li class="nav-item">
+                                    <span class="badge bg-info text-white">{{ Auth::user()->unreadNotifications->count() }}
+                                        Unread notifications</span>
+                                </li>
+                            </a>
+                        @endauth
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -66,7 +73,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                     document.getElementById('logout-form').submit();">
+                                                                                             document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

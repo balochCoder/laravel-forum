@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DiscussionController;
 use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\UserController;
 use App\Models\Discussion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,5 +30,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('discussions',DiscussionController::class);
 Route::resource('discussions/{discussion}/replies',ReplyController::class);
 
-
+Route::get('users/notifications',[UserController::class,'notifications'])->name('users.notifications');
 Route::post('discussions/{discussion}/replies/{reply}/mark-as-best-reply',[DiscussionController::class,'bestReply'])->name('discussions.best');
