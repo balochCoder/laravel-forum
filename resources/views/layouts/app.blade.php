@@ -39,13 +39,15 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         @auth
-                            <a href="" class="nav-link">
+                            <a href="{{ route('users.notifications') }}" class="nav-link">
                                 <li class="nav-item">
                                     <span class="badge bg-info text-white">{{ Auth::user()->unreadNotifications->count() }}
                                         Unread notifications</span>
                                 </li>
                             </a>
                         @endauth
+                        <li class="nav-item"><a href="{{ route('discussions.index') }}"
+                                class="nav-link">Discussions</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -73,7 +75,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                             document.getElementById('logout-form').submit();">
+                                                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

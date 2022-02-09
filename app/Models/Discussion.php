@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\ReplyMarkedAsBestReply;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,6 +34,8 @@ class Discussion extends Model
         $this->update([
             'reply_id' => $reply->id
         ]);
+
+        $reply->user->notify(new ReplyMarkedAsBestReply($reply->discussion));
     }
 
     public function bestReply()
