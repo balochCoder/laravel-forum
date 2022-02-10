@@ -13,7 +13,7 @@ class DiscussionController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->only(['create', 'store']);
+        $this->middleware(['auth','verified'])->only(['create', 'store']);
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class DiscussionController extends Controller
      */
     public function index()
     {
-        $discussions = Discussion::latest()->paginate(5);
+        $discussions = Discussion::filterByChannels()->latest()->paginate(5);
         return view('discussions.index', compact('discussions'));
     }
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Discussion extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'slug', 'content', 'user_id', 'channel_id','reply_id'];
+    protected $fillable = ['title', 'slug', 'content', 'user_id', 'channel_id', 'reply_id'];
 
     public function user()
     {
@@ -35,11 +35,30 @@ class Discussion extends Model
             'reply_id' => $reply->id
         ]);
 
+
+        if ($reply->user->id === $this->user->id) {
+            return;
+        }
         $reply->user->notify(new ReplyMarkedAsBestReply($reply->discussion));
     }
 
     public function bestReply()
     {
-        return $this->belongsTo(Reply::class,'reply_id');
+        return $this->belongsTo(Reply::class, 'reply_id');
+    }
+
+    public function scopeFilterByChannels($query)
+    {
+        if (request()->query('channel')) {
+            $channel = Channel::where('slug', request()->query('channel'))->first();
+
+            if ($channel) {
+                return $query->where('channel_id', $channel->id);
+            }
+
+            return $query;
+        }
+
+        return $query;
     }
 }
