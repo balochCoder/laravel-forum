@@ -31,7 +31,8 @@
             @endif
         </div>
     </div>
-    @foreach ($discussion->replies()->latest()->paginate(3) as $reply)
+    @foreach ($discussion->replies()->latest()->paginate(3)
+        as $reply)
         <div class="card mb-3">
             <div class="card-header">
                 <div class="d-flex justify-content-between">
@@ -66,6 +67,13 @@
             </div>
             <div class="card-body">
                 {!! $reply->content !!}
+            </div>
+            <div class="card-footer">
+                @if ($reply->is_liked_by_auth_user())
+                    <a href="{{route('reply.unlike',$reply->id)}}" class="btn btn-danger btn-sm">Unlike <span class="badge bg-info">{{$reply->likes->count()}}</span></a>
+                @else
+                    <a href="{{route('reply.like',$reply->id)}}" class="btn btn-success btn-sm">Like <span class="badge bg-info">{{$reply->likes->count()}}</span></a>
+                @endif
             </div>
         </div>
     @endforeach

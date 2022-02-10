@@ -32,3 +32,6 @@ Route::resource('discussions/{discussion}/replies',ReplyController::class);
 
 Route::get('users/notifications',[UserController::class,'notifications'])->name('users.notifications');
 Route::post('discussions/{discussion}/replies/{reply}/mark-as-best-reply',[DiscussionController::class,'bestReply'])->name('discussions.best');
+Route::get('reply/like/{reply}',[ReplyController::class,'like'])->name('reply.like');
+Route::get('reply/unlike/{reply}',[ReplyController::class,'unlike'])->name('reply.unlike');
+
